@@ -5,7 +5,7 @@
 }
 
 startup_v8_version_check <- function() {
-  if (v8_version() < package_version("8.1.307.30")) {
+  if (v8_version() < numeric_version("8.1.307.30")) {
     packageStartupMessage(
       "Warning: v8 Engine is version ", v8_version(),
       " but version >= 8.1.307.30 is required for full functionality. See",

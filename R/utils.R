@@ -481,7 +481,7 @@ restore_classes <- function(df, classes) {
 }
 
 stop_for_old_v8 <- function() {
-  if (v8_version() < 6) {
+  if (v8_version() < as.numeric.version(6)) {
     # nocov start
     stop(
       "Warning: v8 Engine is version ", V8::engine_info()[["version"]],
@@ -493,33 +493,7 @@ stop_for_old_v8 <- function() {
 }
 
 v8_version <- function() {
-  as.numeric(string_extract(V8::engine_info()[["numeric_version"]], "^[0-9]+"))
-}
-
-#' Extract pattern from a length 1 string
-#'
-#' @param string Passed to x parameter of [regmatches()]
-#' @inheritParams base::regexpr
-#' @noRd
-string_extract <- function(string, pattern, perl = TRUE) {
-  if (is.na(string)) {
-    return(NA_character_)
-  }
-
-  match <- regmatches(
-    x = string,
-    m = regexpr(
-      pattern = pattern,
-      text = string,
-      perl = perl
-    )
-  )
-
-  if (length(match) == 0) {
-    return(NULL)
-  }
-
-  match
+  V8::engine_info()[["numeric_version"]]
 }
 
 temp_geojson <- function() {
