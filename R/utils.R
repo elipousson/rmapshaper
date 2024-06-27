@@ -493,7 +493,33 @@ stop_for_old_v8 <- function() {
 }
 
 v8_version <- function() {
-  V8::engine_info()[["numeric_version"]]
+  as.numeric(string_extract(V8::engine_info()[["numeric_version"]], "^[0-9]+"))
+}
+
+#' Extract pattern from a length 1 string
+#'
+#' @param string Passed to x parameter of [regmatches()]
+#' @inheritParams base::regexpr
+#' @noRd
+string_extract <- function(string, pattern, perl = TRUE) {
+  if (is.na(string)) {
+    return(NA_character_)
+  }
+
+  match <- regmatches(
+    x = string,
+    m = regexpr(
+      pattern = pattern,
+      text = string,
+      perl = perl
+    )
+  )
+
+  if (length(match) == 0) {
+    return(NULL)
+  }
+
+  match
 }
 
 temp_geojson <- function() {
