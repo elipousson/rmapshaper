@@ -205,6 +205,13 @@ ms_erase.character <- function(target, erase = NULL, bbox = NULL,
 }
 
 #' @export
+ms_erase.geojson <- function(target, erase = NULL, bbox = NULL,
+                          remove_slivers = FALSE, ...) {
+  clip_erase_json(target = target, overlay_layer = erase, type = "erase",
+                  remove_slivers = remove_slivers, bbox = bbox, ...)
+}
+
+#' @export
 ms_erase.json <- function(target, erase = NULL, bbox = NULL,
                               remove_slivers = FALSE, ...) {
   clip_erase_json(target = target, overlay_layer = erase, type = "erase",
